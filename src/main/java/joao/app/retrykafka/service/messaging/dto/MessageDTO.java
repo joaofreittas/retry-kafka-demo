@@ -4,5 +4,6 @@ public interface MessageDTO {
 
     String getBinder();
     String getEventName();
+    PayloadMessage getPayload();
 
 }

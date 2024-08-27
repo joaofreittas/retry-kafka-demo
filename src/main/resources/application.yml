@@ -1,5 +1,26 @@
 spring:
-    application.name: retrykafka
+    application:
+        name: retrykafka
+    cloud:
+        stream:
+            kafka:
+                binder:
+                    configuration:
+                        retries: 3
+                    brokers: ${BROKER_URL:http://localhost:9092}
+                    autoAddPartitions: true
+                    replication-factor: 1
+                    autoCreateTopics: true
+                    producer-properties:
+                        key:
+                            serializer: org.apache.kafka.common.serialization.StringSerializer
+                    deserializationExceptionHandler: logAndContinue
+
+            bindings:
+                kafkaRetryEvents-out-0:
+                    destination: retry-kafka_events
+                    group: retry-kafka
+                    content-type: application/json
 
 springdoc:
     api-docs:
